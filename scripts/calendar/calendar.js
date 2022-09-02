@@ -58,5 +58,3 @@ export const renderWeek = () => {
 
 	getWeekElem.innerHTML = result;
 };
-
-renderWeek();
