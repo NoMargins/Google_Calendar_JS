@@ -1,1 +1,9 @@
 // стили формы события внутри модального окна
+.event-form {
+	position: fixed;
+	width: 300px;
+	height: 300px;
+	// margin-top: calc((100vh - 500px) / 2);
+	// margin-left: calc((100vw - 300px) / 2);
+	background-color: aquamarine;
+}
