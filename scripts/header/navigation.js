@@ -11,11 +11,17 @@ const displayedMonthElem = document.querySelector(
 function renderCurrentMonth() {
 	// отрисовать месяц, к которому относиться текущая неделя (getDisplayedMonth)
 	// вставить в .navigation__displayed-month
+	let result = getDisplayedMonth();
+	displayedMonthElem.innerHTML = result;
 }
 
 const onChangeWeek = (event) => {
 	// при переключении недели обновите displayedWeekStart в storage
 	// и перерисуйте все необходимые элементы страницы (renderHeader, renderWeek, renderCurrentMonth)
+	setItem(event.target.value);
+	renderHeader();
+	renderWeek();
+	renderCurrentMonth();
 };
 
 export const initNavigation = () => {
