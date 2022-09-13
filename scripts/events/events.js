@@ -122,7 +122,6 @@ function onDeleteEvent() {
 	const getEventToDel = document.querySelector(
 		`.displayed-event[data-event-id="${delEventId}"]`
 	);
-
 	closePopup();
 	return getEventToDel.classList.add('hidden');
 }
