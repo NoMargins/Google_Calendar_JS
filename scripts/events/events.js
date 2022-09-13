@@ -1,7 +1,7 @@
 import { getItem, setItem } from '../common/storage.js';
 import shmoment from '../common/shmoment.js';
 import { openPopup, closePopup } from '../common/popup.js';
-import { getStartOfWeek } from '../common/time.utils.js';
+import { getStartOfWeek, twoDigits } from '../common/time.utils.js';
 import { renderWeek } from '../calendar/calendar.js';
 
 const weekElem = document.querySelector('.calendar__week');

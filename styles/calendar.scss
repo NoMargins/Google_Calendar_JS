@@ -4,68 +4,15 @@
 .calendar {
 	overflow: scroll;
 	margin-top: 20px;
-	&__time-zone {
-		display: flex;
-		flex-direction: row;
-		align-items: flex-end;
-		width: 60px;
-		&_name {
-			width: 52px;
-			margin: 0;
-			// margin-top: 56.5px;
-			font-size: 12px;
-			font-weight: 100;
-			border-bottom: 1px solid $grey;
-		}
-		&_decoration {
-			width: 8px;
-			height: 24px;
-			margin: 0px;
-			border-right: 1px solid $grey;
-			border-bottom: 1px solid $grey;
-		}
-	}
+
 	&__week-container {
 		display: flex;
-		flex-direction: row-reverse;
+		flex-direction: row;
 		justify-content: left;
 		width: 100vw;
 		margin: 0;
 	}
-	&__time-scale {
-		// position: absolute;
-		// display: flex;
-		// flex-direction: column;
-		// flex-shrink: 0;
-		// flex-grow: 0;
-		margin-top: 15px;
-		margin-left: 10px;
-		line-height: 60px;
-		text-align: center;
-	}
-	&__time-slot {
-		// border-bottom: 1px solid $grey;
-		display: flex;
-		flex-direction: row;
-		width: 60px;
-		&_numb {
-			width: 52px;
-			align-self: flex-end;
-			margin: 0;
-			// margin-top: 56.5px;
-			font-size: 12px;
-			font-weight: 100;
-			text-align: end;
-			display: table-cell;
-			vertical-align: bottom;
-		}
-		&_decoration {
-			width: 8px;
-			margin: 0px;
-			border-right: 1px solid $grey;
-			border-bottom: 1px solid $grey;
-		}
-	}
+
 	&__week {
 		display: flex;
 		flex-direction: row;
@@ -78,42 +25,79 @@
 		align-self: center;
 		border-top: none;
 		border-right: none;
+		// &_first-el .calendar__day_time-slot,
+		// &_first-el {
+		// 	// width: calc((100vw - 130px) / 7 + 15px);
+		// }
+		&_today > .calendar__day_numb {
+			background-color: $highlight-blue;
+			border: none;
+			border-radius: 50%;
+			color: $white;
+		}
 		&_name {
-			height: 10px;
 			margin-top: 8px;
 			border: none;
 			font-size: 11px;
 			font-weight: 500;
-			letter-spacing: 0.8px;
+			// letter-spacing: 0.8px;
 			text-transform: uppercase;
 		}
 		&_numb {
 			align-self: center;
-			height: 22px;
+			text-align: center;
+			// height: 22px;
+			// width: 22px;
+			height: 40px;
+			width: 40px;
+			padding: 5px;
+			padding-top: 7px;
 			margin: 0px;
 			border: none;
-			letter-spacing: -2.6px;
+			// letter-spacing: -2.6px;
 			font-size: 26px;
 			font-weight: 400;
-			&:hover {
-				background-color: $highlight-blue;
-				border: none;
-				border-radius: 50%;
-				color: $white;
-			}
 		}
 		&_decoration {
-			height: 24px;
+			height: 16px;
 			margin: 0px;
 			border-right: 1px solid $grey;
+			// border-left: 1px solid $grey;
+
+			&:first-child {
+				border-left: 1px solid $grey;
+			}
 		}
 
 		&_time-slot {
 			width: calc((100vw - 130px) / 7);
+			height: 60px;
 			line-height: 59px;
 			color: white;
 			border-top: 1px solid $grey;
 			border-right: 1px solid $grey;
 		}
+	}
+}
+
+.current-time {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	z-index: 150;
+	margin: 0;
+	margin-top: -3px;
+	&__circle {
+		width: 10px;
+		height: 10px;
+		border: none;
+		border-radius: 50px;
+		background-color: red;
+	}
+	&__rectangle {
+		height: 2px;
+		width: calc((100vw - 130px) / 7 - 5px);
+		border: none;
+		background-color: red;
 	}
 }

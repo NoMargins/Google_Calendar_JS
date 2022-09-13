@@ -1,6 +1,60 @@
 // стили боковой временной шкалы
-.some-style {
-	font-size: 10px;
-	padding-top: 48px;
-	margin: 0px;
+.calendar {
+	&__time-zone {
+		width: 60px;
+		margin-bottom: 73px;
+		&_name {
+			width: 50px;
+			margin: 0px;
+			padding: 0px;
+			padding-right: 10px;
+			top: 27.5px;
+			left: 10px;
+			font-size: 12px;
+			font-weight: 100;
+			border-bottom: 1px solid $grey;
+			// border-right: 1px solid $grey;
+		}
+	}
+	&__time-scale {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		line-height: 60px;
+		text-align: center;
+	}
+	&__time-slot {
+		// border-bottom: 1px solid $grey;
+		width: 60px;
+		height: 60px;
+		border-right: 1px solid $grey;
+
+		&_numb {
+			margin: 0px;
+			// padding-right: 20px;
+			left: 18.5px;
+			top: 45.5px;
+			font-size: 12px;
+
+			font-weight: 100;
+			text-align: end;
+			display: table-cell;
+			vertical-align: bottom;
+		}
+		&_decoration {
+			width: 8px;
+			margin: 0px;
+			border-right: 1px solid $grey;
+			border-bottom: 1px solid $grey;
+		}
+	}
 }
+
+// [id='first'] {
+// 	height: 89px;
+// 	border-right: 1px solid $grey;
+// 	padding-right: 11px;
+// 	text-align: end;
+// 	margin-bottom: 0px;
+// 	margin-left: 30px;
+// }

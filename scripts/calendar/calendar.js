@@ -41,17 +41,32 @@ export const renderWeek = () => {
 				'data-slot-date',
 				`${dayNumb.getFullYear()}${dayNumb.getMonth()}${dayNumb.getDate()}`
 			);
-			newTimeSlotEL.innerText = `${timeNumber}`;
-			// newTimeSlotEL.innerText = ` `;
+			newTimeSlotEL.setAttribute(
+				'data-full-date',
+				`${new Date(dayNumb).setHours(timeNumber + 1)}`
+			);
+
+			newTimeSlotEL.innerText = ``;
 
 			return newTimeSlotEL;
 		});
-		// .join('');
-		// proceed
+
 		createNewDiv.setAttribute(
 			'data-day-date',
 			`${dayNumb.getFullYear()}${dayNumb.getMonth()}${dayNumb.getDate()}`
 		);
+		createNewDiv.setAttribute('data-day-fulldate', new Date(dayNumb));
+		if (
+			new Date(dayNumb).getFullYear() === new Date().getFullYear() &&
+			new Date(dayNumb).getMonth() === new Date().getMonth() &&
+			new Date(dayNumb).getDate() === new Date().getDate()
+		) {
+			createNewDiv.classList.add('calendar__day_today');
+		}
+		if (createNewDiv.dataset.dayNumb === '1') {
+			createNewDiv.classList.add('calendar__day_first-el');
+		}
+		createNewDiv.setAttribute('data-day-numb', `${dayNumb.getDay()}`);
 		createNewNameParag.innerText = `${daysOfWeek[dayNumb.getDay()]}`;
 		createNewNumbParag.innerText = `${dayNumb.getDate()}`;
 		createNewDiv.append(
@@ -67,12 +82,3 @@ export const renderWeek = () => {
 	getWeekElem.prepend(...result);
 	renderEvents(getItem('events'));
 };
-
-const getChoosenEl = [...document.querySelectorAll('.for-choose-options')];
-
-export const getChoosenDay = () =>
-	getChoosenEl.forEach((el) => {
-		el.addEventListener('click', function () {
-			el.classList.add('calendar__chosen-date');
-		});
-	});
