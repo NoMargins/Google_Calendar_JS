@@ -1,27 +1,119 @@
 // стили сетки календаря и заголовка календаря с днями недели
+@import 'variables.scss';
+
 .calendar {
-	&__time-scale {
+	overflow: scroll;
+	margin-top: 20px;
+	&__time-zone {
 		display: flex;
-		flex-direction: column;
-		background-color: coral;
-		margin-top: 0px;
-		width: 100px;
-		border: 5px solid black;
+		flex-direction: row;
+		align-items: flex-end;
+		width: 60px;
+		&_name {
+			width: 52px;
+			margin: 0;
+			// margin-top: 56.5px;
+			font-size: 12px;
+			font-weight: 100;
+			border-bottom: 1px solid $grey;
+		}
+		&_decoration {
+			width: 8px;
+			height: 24px;
+			margin: 0px;
+			border-right: 1px solid $grey;
+			border-bottom: 1px solid $grey;
+		}
+	}
+	&__week-container {
+		display: flex;
+		flex-direction: row-reverse;
+		justify-content: left;
+		width: 100vw;
+		margin: 0;
+	}
+	&__time-scale {
+		// position: absolute;
+		// display: flex;
+		// flex-direction: column;
+		// flex-shrink: 0;
+		// flex-grow: 0;
+		margin-top: 15px;
+		margin-left: 10px;
+		line-height: 60px;
+		text-align: center;
 	}
 	&__time-slot {
-		height: 50px;
-		border: 2px solid blue;
+		// border-bottom: 1px solid $grey;
+		display: flex;
+		flex-direction: row;
+		width: 60px;
+		&_numb {
+			width: 52px;
+			align-self: flex-end;
+			margin: 0;
+			// margin-top: 56.5px;
+			font-size: 12px;
+			font-weight: 100;
+			text-align: end;
+			display: table-cell;
+			vertical-align: bottom;
+		}
+		&_decoration {
+			width: 8px;
+			margin: 0px;
+			border-right: 1px solid $grey;
+			border-bottom: 1px solid $grey;
+		}
 	}
 	&__week {
 		display: flex;
 		flex-direction: row;
-		height: 100px;
-		border: 5px solid black;
-		margin-left: 100px;
-		margin-top: 40px;
 	}
 	&__day {
-		width: 50px;
-		border: 2px solid green;
+		display: flex;
+		flex-direction: column;
+		width: calc((100vw - 130px) / 7);
+		text-align: center;
+		align-self: center;
+		border-top: none;
+		border-right: none;
+		&_name {
+			height: 10px;
+			margin-top: 8px;
+			border: none;
+			font-size: 11px;
+			font-weight: 500;
+			letter-spacing: 0.8px;
+			text-transform: uppercase;
+		}
+		&_numb {
+			align-self: center;
+			height: 22px;
+			margin: 0px;
+			border: none;
+			letter-spacing: -2.6px;
+			font-size: 26px;
+			font-weight: 400;
+			&:hover {
+				background-color: $highlight-blue;
+				border: none;
+				border-radius: 50%;
+				color: $white;
+			}
+		}
+		&_decoration {
+			height: 24px;
+			margin: 0px;
+			border-right: 1px solid $grey;
+		}
+
+		&_time-slot {
+			width: calc((100vw - 130px) / 7);
+			line-height: 59px;
+			color: white;
+			border-top: 1px solid $grey;
+			border-right: 1px solid $grey;
+		}
 	}
 }

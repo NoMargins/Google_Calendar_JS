@@ -1,9 +1,63 @@
 // стили отображаемого в календаре события
 
-.event {
-	width: 200px;
-	background-color: #6495ed;
-	color: white;
+.displayed-event {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	justify-content: left;
+	align-items: flex-start;
+	flex-grow: 1;
+	flex-shrink: 1;
+	flex-wrap: wrap;
+	white-space: nowrap;
+	overflow: hidden;
+	width: 145px;
+	margin: 0px;
+	background-color: $green;
+	opacity: 85%;
+	color: $event-text-color;
 	border-radius: 8px;
-	padding: 8px;
+	box-shadow: 1px 6px 15px 5px rgba(103, 103, 103, 0.5);
+	z-index: 5;
+	&_click {
+		z-index: 10;
+	}
+
+	&__name {
+		margin: 0px;
+		margin-left: 8px;
+		margin-top: 8px;
+		line-height: 15px;
+		padding: 0px;
+		font-size: 12px;
+		font-weight: 300;
+	}
+	&__description {
+		margin: 0px;
+		margin-left: 8px;
+		font-size: 12px;
+		line-height: 15px;
+		padding: 0px;
+		font-weight: 100;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+	}
+	&__time {
+		margin: 0px;
+		margin-left: 8px;
+		line-height: 15px;
+		font-size: 12px;
+		font-weight: 100;
+	}
+	&__small-text {
+		display: flex;
+		flex-direction: row;
+		font-size: 6px;
+		background-color: red;
+	}
+}
+
+.hidden {
+	visibility: hidden;
 }

@@ -5,6 +5,7 @@
 @import 'timescale.scss';
 @import 'create-event.scss';
 @import 'event.scss';
+@import 'variables.scss';
 
 * {
 	box-sizing: border-box;
@@ -13,5 +14,5 @@
 body {
 	font-size: 18px;
 	font-family: 'Roboto', sans-serif;
-	color: #000000;
+	color: $font-color;
 }

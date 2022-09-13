@@ -1,6 +1,39 @@
 // стили навигации
+@import 'variables.scss';
+
 .header {
 	display: flex;
 	flex-direction: row;
-	margin-left: 100px;
+	padding: 20px 0px 30px 100px;
+	border-bottom: 1px solid $grey;
+}
+
+.create-event-btn,
+.navigation__today-btn {
+	margin-right: 20px;
+	width: 100px;
+	border: 1px solid $grey;
+	border-radius: 8px;
+}
+.popup__content {
+	display: block;
+	width: 80px;
+	height: 35px;
+	padding: 0px;
+	border-radius: 8px;
+}
+.delete-event-btn {
+	width: 80px;
+	height: 35px;
+	margin: 0px;
+	padding: 5px;
+	font-size: 12px;
+	border-radius: 8px;
+	border: 1px solid $grey;
+}
+
+.fa-solid {
+	margin-right: 10px;
+	color: $highlight-blue;
+	opacity: 100%;
 }

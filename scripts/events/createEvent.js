@@ -6,10 +6,12 @@ import { closeModal } from '../common/modal.js';
 const eventFormElem = document.querySelector('.event-form');
 const closeEventFormBtn = document.querySelector('.create-event__close-btn');
 const submitBtnElem = document.querySelector('.event-form__submit-btn');
+const getInputValues = [...document.querySelectorAll('.event-form__field')];
+const getEventsArr = getItem('events');
 
 function clearEventForm() {
 	// ф-ция должна очистить поля формы от значений
-	eventFormElem.textContent = '';
+	getInputValues.map((el) => (el.value = ''));
 }
 
 function onCloseEventForm() {
@@ -18,7 +20,7 @@ function onCloseEventForm() {
 	clearEventForm();
 }
 
-function onCreateEvent(event) {
+const onCreateEvent = () => {
 	// задача этой ф-ции только добавить новое событие в массив событий, что хранится в storage
 	// создавать или менять DOM элементы здесь не нужно. Этим займутся другие ф-ции
 	// при подтверждении формы нужно считать данные с формы
@@ -28,31 +30,32 @@ function onCreateEvent(event) {
 	// полученное событие добавляем в массив событий, что хранится в storage
 	// закрываем форму
 	// и запускаем перерисовку событий с помощью renderEvents
-	const startDateEvent = getDateTime(
-		event.target.date.value,
-		event.target.startTime.value
-	);
-	const endDateEvent = getDateTime(
-		event.target.date.value,
-		event.target.endTime.value
-	);
 
-	setItem({
-		date: event.target.date.value,
+	const [title, date, startTime, endTime, description] = getInputValues;
+	const startDateEvent = getDateTime(date.value, startTime.value);
+	const endDateEvent = getDateTime(date.value, endTime.value);
+
+	const newEvent = {
+		id: Math.random(),
+		date: date.value,
 		startTime: startDateEvent,
 		endTime: endDateEvent,
-		title: event.target.title.value,
-		description: event.target.description.value,
-	});
+		title: title.value,
+		description: description.value,
+	};
+	getItem('events').push(newEvent);
 
-	// event.target.date.value;
-	// event.target.title.value;
-	// event.target.description.value;
-	onCloseEventForm();
-	renderEvents();
-}
+	return getEventsArr;
+};
 
 export function initEventForm() {
 	// подпишитесь на сабмит формы и на закрытие формы
-	submitBtnElem.addEventListener('click', onCreateEvent);
+
+	eventFormElem.addEventListener('submit', function (e) {
+		e.preventDefault();
+		onCreateEvent();
+		renderEvents(getItem('events'));
+		onCloseEventForm();
+	});
+	closeEventFormBtn.addEventListener('click', onCloseEventForm);
 }

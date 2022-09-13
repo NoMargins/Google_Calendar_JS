@@ -4,27 +4,55 @@ import { renderHeader } from '../calendar/header.js';
 import { getStartOfWeek, getDisplayedMonth } from '../common/time.utils.js';
 
 const navElem = document.querySelector('.navigation');
+const getTodayButton = document.querySelector('button[data-direction="today"]');
+const getPreviousButton = document.querySelector(
+	'button[data-direction="prev"]'
+);
+const getNextButton = document.querySelector('button[data-direction="next"]');
 const displayedMonthElem = document.querySelector(
 	'.navigation__displayed-month'
 );
+let getDisplayedWeekStart = new Date(getItem('displayedWeekStart'));
 
 function renderCurrentMonth() {
 	// отрисовать месяц, к которому относиться текущая неделя (getDisplayedMonth)
 	// вставить в .navigation__displayed-month
-	let result = getDisplayedMonth();
-	displayedMonthElem.innerHTML = result;
+	let result = getDisplayedMonth(getDisplayedWeekStart);
+	displayedMonthElem.innerHTML = `<span class="navigation__displayed-month"> ${result} </span>`;
 }
 
-const onChangeWeek = (event) => {
-	// при переключении недели обновите displayedWeekStart в storage
-	// и перерисуйте все необходимые элементы страницы (renderHeader, renderWeek, renderCurrentMonth)
-	setItem(event.target.value);
-	renderHeader();
-	renderWeek();
-	renderCurrentMonth();
+const functionForNow = () => {
+	return (getDisplayedWeekStart = new Date());
+};
+
+const functionForPrev = () => {
+	return getDisplayedWeekStart.setDate(getDisplayedWeekStart.getDate() - 7);
+};
+
+const functionForNext = () => {
+	return getDisplayedWeekStart.setDate(getDisplayedWeekStart.getDate() + 7);
 };
 
 export const initNavigation = () => {
-	renderCurrentMonth();
-	navElem.addEventListener('click', onChangeWeek);
+	getTodayButton.addEventListener('click', function () {
+		functionForNow();
+		setItem('displayedWeekStart', getStartOfWeek(getDisplayedWeekStart));
+		renderHeader();
+		renderWeek();
+		renderCurrentMonth();
+	});
+	getPreviousButton.addEventListener('click', function () {
+		functionForPrev();
+		setItem('displayedWeekStart', getStartOfWeek(getDisplayedWeekStart));
+		renderHeader();
+		renderWeek();
+		renderCurrentMonth();
+	});
+	getNextButton.addEventListener('click', function () {
+		functionForNext();
+		setItem('displayedWeekStart', getStartOfWeek(getDisplayedWeekStart));
+		renderHeader();
+		renderWeek();
+		renderCurrentMonth();
+	});
 };
