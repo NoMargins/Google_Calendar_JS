@@ -69,6 +69,7 @@
 							type="text"
 							name="title"
 							placeholder="Title"
+							id="title"
 							class="event-form__field"
 							required
 							autofocus
@@ -78,11 +79,13 @@
 								type="date"
 								name="date"
 								class="event-form__field"
+								id="date"
 								required
 							/>
 							<input
 								type="time"
 								name="startTime"
+								id="startTime"
 								class="event-form__field"
 								required
 							/>
@@ -90,13 +93,16 @@
 							<input
 								type="time"
 								name="endTime"
+								id="endTime"
 								class="event-form__field"
 								required
 							/>
 						</div>
+						<span class="error-board"></span>
 						<textarea
 							name="description"
 							placeholder="Description"
+							id="description"
 							class="event-form__field"
 						></textarea>
 						<button type="submit" class="event-form__submit-btn">Create</button>
@@ -109,9 +115,18 @@
 		<div class="popup hidden overlay">
 			<div class="popup__overlay"></div>
 			<div class="popup__content">
-				<button class="delete-event-btn">
-					<i class="fa-solid fa-trash"></i>Delete
-				</button>
+				<div class="popup__icons">
+					<div class="edit-event-btn">
+						<i class="fa-solid fa-pen"></i>
+					</div>
+					<div class="delete-event-btn">
+						<i class="fa-solid fa-trash"></i>
+					</div>
+					<div class="close-event-btn">
+						<i class="fa-solid fa-xmark"></i>
+					</div>
+				</div>
+				<div class="popup__info"></div>
 			</div>
 		</div>
 		<script src="scripts/index.js" type="module"></script>

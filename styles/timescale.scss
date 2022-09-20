@@ -1,19 +1,22 @@
 // стили боковой временной шкалы
+@import 'variables.scss';
+
 .calendar {
 	&__time-zone {
 		width: 60px;
-		margin-bottom: 73px;
+		line-height: 1em;
+		padding-bottom: 2px;
+		border-top: 1px solid $grey;
+		border-right: 1px solid $grey;
+		background-color: $white;
 		&_name {
-			width: 50px;
-			margin: 0px;
-			padding: 0px;
-			padding-right: 10px;
-			top: 27.5px;
+			margin: auto;
 			left: 10px;
+			padding: 0px;
 			font-size: 12px;
 			font-weight: 100;
-			border-bottom: 1px solid $grey;
-			// border-right: 1px solid $grey;
+
+			// border-top: 1px solid $grey;
 		}
 	}
 	&__time-scale {
@@ -33,9 +36,8 @@
 			margin: 0px;
 			// padding-right: 20px;
 			left: 18.5px;
-			top: 45.5px;
+			top: 10.5px;
 			font-size: 12px;
-
 			font-weight: 100;
 			text-align: end;
 			display: table-cell;
@@ -50,11 +52,35 @@
 	}
 }
 
-// [id='first'] {
-// 	height: 89px;
-// 	border-right: 1px solid $grey;
-// 	padding-right: 11px;
-// 	text-align: end;
-// 	margin-bottom: 0px;
-// 	margin-left: 30px;
-// }
+.svg-logo-plus {
+	position: sticky;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	top: 0;
+	min-height: 82.65px;
+	max-width: 60px;
+	background-color: $white;
+	z-index: 120;
+}
+
+svg {
+	width: 56px;
+	height: 56px;
+	text-align: center;
+	margin: 12.7px auto;
+	padding: 5px;
+	background-color: $white;
+	vertical-align: middle;
+	// background-color: green;
+	border-radius: 50%;
+	border-bottom: 1px solid $grey;
+
+	&:hover {
+		cursor: pointer;
+		box-shadow: 0 0 0 3px rgba(rgb(121, 120, 120), 0.4),
+			0 0 0 6px rgb(237, 235, 237);
+	}
+}

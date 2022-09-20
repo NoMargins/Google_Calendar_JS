@@ -20,7 +20,6 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-
 	&__content {
 		background: #fff;
 		border: 1px solid #ccc;
@@ -35,17 +34,7 @@
 	width: 100vw;
 	height: 100vh;
 	background-color: #cccccc45;
-	z-index: 10;
-}
-
-.popup {
-	&__content {
-		position: absolute;
-		background: #fff;
-		padding: 16px;
-		border: 1px solid #ccc;
-		border-radius: 8px;
-	}
+	z-index: 1000;
 }
 
 .hidden {

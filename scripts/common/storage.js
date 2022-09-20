@@ -7,17 +7,45 @@ let storage = {
 	events: [
 		{
 			id: 0.7520027086457333, // id понадобится для работы с событиями
-			title: 'Title 1',
-			description: 'Some description',
-			startTime: new Date(2022, 8, 15, 14, 30),
-			endTime: new Date(2022, 8, 15, 15, 10),
+			title: "Dad's b-day",
+			description: 'Congratulate dad by phone',
+			startTime: new Date(2022, 8, 21, 0),
+			endTime: new Date(2022, 8, 21, 23, 59),
+		},
+		{
+			id: 0.652076457333, // id понадобится для работы с событиями
+			title: 'Gromcode studying',
+			description: 'Learn about the browser local storage',
+			startTime: new Date(2022, 8, 23, 10, 30),
+			endTime: new Date(2022, 8, 23, 17),
 		},
 		{
 			id: 0.452002708676633, // id понадобится для работы с событиями
-			title: 'Title 2',
-			description: 'Some description',
-			startTime: new Date(2022, 8, 13, 8, 45),
-			endTime: new Date(2022, 8, 13, 14, 10),
+			title: 'English lesson',
+			description: 'learn Past Perfect',
+			startTime: new Date(2022, 8, 23, 11, 30),
+			endTime: new Date(2022, 8, 23, 13),
+		},
+		{
+			id: 0.23476457333, // id понадобится для работы с событиями
+			title: 'Gromcode studying',
+			description: 'Learn about the browser local storage',
+			startTime: new Date(2022, 8, 25, 10, 30),
+			endTime: new Date(2022, 8, 25, 17),
+		},
+		{
+			id: 0.123408676633, // id понадобится для работы с событиями
+			title: 'English lesson',
+			description: 'learn Past Perfect continuous',
+			startTime: new Date(2022, 8, 25, 10, 45),
+			endTime: new Date(2022, 8, 25, 13),
+		},
+		{
+			id: 0.15434308676633, // id понадобится для работы с событиями
+			title: 'Very Long title in a small window',
+			description: "let's try how it will be shown",
+			startTime: new Date(2022, 8, 24, 8, 45),
+			endTime: new Date(2022, 8, 24, 9),
 		},
 	],
 	// это все данные, которые вам нужно хранить для работы приложения

@@ -6,6 +6,7 @@
 	flex-direction: column;
 	flex-grow: 1;
 	flex-shrink: 1;
+	z-index: 5000;
 	&__close {
 		display: flex;
 		flex-direction: row;
@@ -82,4 +83,14 @@
 		border-bottom: 3px solid $highlight-blue;
 		outline: none;
 	}
+}
+
+.error-board {
+	height: 24px;
+	width: 280px;
+	text-overflow: scroll;
+	margin-bottom: 10px;
+	text-align: center;
+	font-size: 10px;
+	color: red;
 }

@@ -69,3 +69,40 @@ const createEventElement = (event) => {
 		newEventElement.classList.add('displayed-event__small-text');
 	}
 };
+
+// check the proper values
+{
+	const isRequired = (value) => (value ? undefined : 'Required'); // emptiness check - if empty: red message "Reqired"
+
+	const doesntExceed = (start, end) =>
+		end > start
+			? false
+			: 'The StartTime shoud not exceed the EndTime of your event'; // @ check : --//--
+
+	const wrongDuration = (start, end) =>
+		end - start > 15 * 60 * 1000
+			? false
+			: 'The EndTime should not exceed the StartTime of your event ';
+
+	const validatorsByField = {
+		startingTime: [isRequired, doesntExceed],
+		endingTime: [isRequired, wrongDuration],
+	};
+
+	const validate = (fieldName, value) => {
+		const validators = validatorsByField[fieldName];
+		return validators
+			.map((validator) => validator(value))
+			.filter((errorText) => errorText)
+			.join(', ');
+	};
+	const checkTheDuration = (event) => {
+		const errorText = validate('startingTime', event.target.value);
+		errorBoard.textContent = errorText;
+		return;
+	};
+	const checkTheStartTime = (event) => {
+		const errorText = validate('endingTime', event.target.value);
+		errorBoard.textContent = errorText;
+		return;
+	};

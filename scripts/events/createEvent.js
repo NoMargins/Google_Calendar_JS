@@ -1,43 +1,29 @@
 import { getItem, setItem } from '../common/storage.js';
-import { renderEvents } from './events.js';
-import { getDateTime, twoDigits } from '../common/time.utils.js';
+import { renderEvents, renderEventBoard, onDeleteEvent } from './events.js';
+import { getDateTime, checkForDigits } from '../common/time.utils.js';
 import { openModal, closeModal } from '../common/modal.js';
+import { openPopup } from '../common/popup.js';
 
 const eventFormElem = document.querySelector('.event-form');
 const closeEventFormBtn = document.querySelector('.create-event__close-btn');
-const submitBtnElem = document.querySelector('.event-form__submit-btn');
 const getInputValues = [...document.querySelectorAll('.event-form__field')];
-const getEventsArr = getItem('events');
-const getTimeSlotsArr = [
-	...document.querySelectorAll('.calendar__day_time-slot'),
-];
+const errorBoard = document.querySelector('.error-board');
 
 function clearEventForm() {
-	// ф-ция должна очистить поля формы от значений
-	getInputValues.map((el) => (el.value = ''));
+	[...document.querySelectorAll('.event-form__field')].map(
+		(el) => (el.value = '')
+	);
 }
 
 function onCloseEventForm() {
-	// здесь нужно закрыть модальное окно и очистить форму
 	closeModal();
 	clearEventForm();
 }
 
 const onCreateEvent = () => {
-	// задача этой ф-ции только добавить новое событие в массив событий, что хранится в storage
-	// создавать или менять DOM элементы здесь не нужно. Этим займутся другие ф-ции
-	// при подтверждении формы нужно считать данные с формы
-	// с формы вы получите поля date, startTime, endTime, title, description
-	// на основе полей date, startTime, endTime нужно посчитать дату начала и окончания события
-	// date, startTime, endTime - строки. Вам нужно с помощью getDateTime из утилит посчитать start и end объекта события
-	// полученное событие добавляем в массив событий, что хранится в storage
-	// закрываем форму
-	// и запускаем перерисовку событий с помощью renderEvents
-
 	const [title, date, startTime, endTime, description] = getInputValues;
 	const startDateEvent = getDateTime(date.value, startTime.value);
 	const endDateEvent = getDateTime(date.value, endTime.value);
-
 	const newEvent = {
 		id: Math.random(),
 		date: date.value,
@@ -47,17 +33,14 @@ const onCreateEvent = () => {
 		description: description.value,
 	};
 	getItem('events').push(newEvent);
-
-	return getEventsArr;
+	clearEventForm();
 };
 
 const onTimeSlotClick = (event) => {
-	if (
-		event.target.classList.contains('calendar__day_time-slot')
-		// !event.target.classList.contains('displayed-event')
-	) {
+	// this is a function which react to the click on the week table
+	// if the click occured for the empty time-slot elements, the function performes the following algorithm
+	if (event.target.classList.contains('calendar__day_time-slot')) {
 		openModal();
-
 		const [title, date, startTime, endTime, description] = getInputValues;
 		let month = new Date(Number(event.target.dataset.fullDate)).getMonth() + 1;
 		const year = new Date(Number(event.target.dataset.fullDate)).getFullYear();
@@ -65,43 +48,90 @@ const onTimeSlotClick = (event) => {
 		let hourNeeded = new Date(Number(event.target.dataset.fullDate)).getHours();
 		let hourPlusTime = hourNeeded + 1;
 
-		if (month.toString().length <= 1) {
-			month = twoDigits(month);
+		date.value = `${year}-${checkForDigits(month)}-${checkForDigits(
+			dateNeeded
+		)}`;
+		startTime.value = `${checkForDigits(hourNeeded)}:00`;
+		endTime.value = `${checkForDigits(hourPlusTime)}:00`;
+	}
+	// if the click complies with some of the Displayed Events, the function performes this algorithm
+	if (
+		event.target.classList.contains('displayed-event') ||
+		event.target.parentNode.classList.contains('displayed-event')
+	) {
+		if (event.target.parentNode.classList.contains('displayed-event')) {
+			parent = event.target.parentNode;
+		} else {
+			parent = event.target;
 		}
+		const getElemProps = parent.getBoundingClientRect();
+		if (getElemProps.x > (window.screen.width * 2) / 3) {
+			openPopup(getElemProps.left - getElemProps.width, getElemProps.top);
+		} else {
+			openPopup(getElemProps.left + getElemProps.width, getElemProps.top);
+		}
+		const popupContent = document.querySelector('.popup__content');
+		popupContent.setAttribute('data-popup-id', parent.dataset.eventId);
+		setItem('eventIdToDelete', parent.dataset.eventId);
 
-		if (dateNeeded.toString().length <= 1) {
-			dateNeeded = twoDigits(dateNeeded);
-		}
-
-		if (hourNeeded.toString().length <= 1) {
-			hourNeeded = twoDigits(hourNeeded);
-		}
-
-		if (hourPlusTime.toString().length <= 1) {
-			hourPlusTime = twoDigits(hourPlusTime);
-		}
-		date.value = `${year}-${month}-${dateNeeded}`;
-		startTime.value = `${hourNeeded}:00`;
-		endTime.value = `${hourPlusTime}:00`;
+		// and reveal the popup with the given event information through the renderEventBoard function
+		renderEventBoard(event);
 	}
 };
 
-// `${new Date(event.target.dataset.fullDate).getFullYear()}-${new Date(
-// 	event.target.dataset.fullDate
-// ).getMonth()}-${new Date(event.target.dataset.fullDate).getDate()}`;
+const onTimeInputChange = () => {
+	const [title, date, startTime, endTime, description] = getInputValues;
+	const start = getDateTime(date.value, startTime.value);
+	const end = getDateTime(date.value, endTime.value);
+	if (new Date(end).getTime() < new Date(start).getTime()) {
+		return (errorBoard.textContent =
+			'The EndTime should not prеcedе to the StartTime of your event');
+	}
+	if (
+		new Date(end).getTime() > new Date(start).getTime() &&
+		new Date(new Date(end).getTime() - new Date(start).getTime()) / 60000 < 15
+	) {
+		return (errorBoard.textContent =
+			'Your event duration should exceed 15 minutes');
+	} else {
+		return (errorBoard.textContent = '');
+	}
+};
 
+// this function provides event-listeners for the Event Form submit
 export function initEventForm() {
-	// подпишитесь на сабмит формы и на закрытие формы
+	// let's check the accuracy of the entered values for Input
+	document
+		.querySelector('#endTime')
+		.addEventListener('change', onTimeInputChange);
+	document
+		.querySelector('#startTime')
+		.addEventListener('change', onTimeInputChange);
 
 	eventFormElem.addEventListener('submit', function (e) {
 		e.preventDefault();
-		onCreateEvent();
-		renderEvents(getItem('events'));
-		onCloseEventForm();
+		if (document.querySelector('.error-board').textContent.length >= 1) {
+			return;
+		} else {
+			onCreateEvent();
+			if (getItem('eventIdToDelete') != null) {
+				document.querySelector('.event-form__submit-btn').textContent =
+					'Create';
+				onDeleteEvent();
+				onCloseEventForm();
+				setItem('eventIdToDelete', null);
+			} else {
+				renderEvents(getItem('events'));
+				onCloseEventForm();
+			}
+		}
 	});
+
 	closeEventFormBtn.addEventListener('click', onCloseEventForm);
 
 	document
 		.querySelector('.calendar__week-container')
 		.addEventListener('click', onTimeSlotClick);
+
+	document.querySelector('.svg-logo-plus').addEventListener('click', openModal);
 }

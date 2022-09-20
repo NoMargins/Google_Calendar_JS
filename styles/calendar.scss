@@ -2,17 +2,15 @@
 @import 'variables.scss';
 
 .calendar {
-	overflow: scroll;
-	margin-top: 20px;
-
+	overflow-y: scroll;
+	margin-top: 6px;
 	&__week-container {
 		display: flex;
 		flex-direction: row;
 		justify-content: left;
 		width: 100vw;
-		margin: 0;
+		margin: 0 8px;
 	}
-
 	&__week {
 		display: flex;
 		flex-direction: row;
@@ -20,39 +18,31 @@
 	&__day {
 		display: flex;
 		flex-direction: column;
-		width: calc((100vw - 130px) / 7);
-		text-align: center;
-		align-self: center;
 		border-top: none;
 		border-right: none;
-		// &_first-el .calendar__day_time-slot,
-		// &_first-el {
-		// 	// width: calc((100vw - 130px) / 7 + 15px);
-		// }
-		&_today > .calendar__day_numb {
+		&_today .calendar__day_numb {
 			background-color: $highlight-blue;
 			border: none;
 			border-radius: 50%;
 			color: $white;
+		}
+		&_today .calendar__day_name {
+			color: $highlight-blue;
 		}
 		&_name {
 			margin-top: 8px;
 			border: none;
 			font-size: 11px;
 			font-weight: 500;
+			margin-bottom: 5px;
 			// letter-spacing: 0.8px;
 			text-transform: uppercase;
 		}
 		&_numb {
-			align-self: center;
-			text-align: center;
-			// height: 22px;
-			// width: 22px;
 			height: 40px;
 			width: 40px;
 			padding: 5px;
-			padding-top: 7px;
-			margin: 0px;
+			margin: auto;
 			border: none;
 			// letter-spacing: -2.6px;
 			font-size: 26px;
@@ -63,14 +53,13 @@
 			margin: 0px;
 			border-right: 1px solid $grey;
 			// border-left: 1px solid $grey;
-
 			&:first-child {
 				border-left: 1px solid $grey;
 			}
 		}
 
 		&_time-slot {
-			width: calc((100vw - 130px) / 7);
+			width: calc((100vw - 76px) / 7);
 			height: 60px;
 			line-height: 59px;
 			color: white;
@@ -96,8 +85,20 @@
 	}
 	&__rectangle {
 		height: 2px;
-		width: calc((100vw - 130px) / 7 - 5px);
+		width: calc((100vw - 76px) / 7 - 5px);
 		border: none;
 		background-color: red;
 	}
+}
+
+.sticky {
+	position: sticky;
+	top: 0;
+	min-height: 2em;
+	width: calc((100vw - 76px) / 7);
+	z-index: 200;
+	text-align: center;
+	align-self: center;
+	border-bottom: 1px solid $grey;
+	background-color: $white;
 }

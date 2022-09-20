@@ -7,7 +7,7 @@ export const highlightDate = () => {
 		if (
 			slot.dataset.slotDate ===
 				`${new Date().getFullYear()}${new Date().getMonth()}${new Date().getDate()}` &&
-			slot.dataset.timeSlot === `${new Date().getHours() + 1}`
+			slot.dataset.timeSlot === `${new Date().getHours()}`
 		) {
 			getCurTimeEl.classList.remove('hidden');
 			getCurTimeEl.style.position = 'absolute';

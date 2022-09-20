@@ -63,6 +63,16 @@ export const getDisplayedMonth = (date) => {
 		: `${monthsNames[startMonth]} ${startYear} - ${monthsNames[endMonth]} ${endYear}`;
 };
 
-export const twoDigits = (num) => {
-	return ('0' + num).toString();
+export const checkForDigits = (value) => {
+	if (value.toString().length === 1) {
+		return (value = ('0' + value).toString());
+	} else {
+		return value;
+	}
+};
+
+export const calcTimeDiffInMinutes = (startTimeFunct, endTimeFunct) => {
+	const startTime = new Date(startTimeFunct);
+	const endTime = new Date(endTimeFunct);
+	return (endTime - startTime) / 60000;
 };
