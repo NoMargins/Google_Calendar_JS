@@ -118,7 +118,11 @@ export const renderEventBoard = (event) => {
 		'November',
 	];
 	getItem('events')
-		.filter((el) => Number(el.id) === Number(event.target.dataset.eventId))
+		.filter(
+			(el) =>
+				Number(el.id) === Number(event.target.dataset.eventId) ||
+				Number(el.id) === Number(event.target.parentNode.dataset.eventId)
+		)
 		.map(({ id, title, description, startTime, endTime }) => {
 			const getInfoBlock = document.querySelector('.popup__info');
 			const createInfoBlock = document.createElement('div');
