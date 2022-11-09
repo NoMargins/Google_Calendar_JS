@@ -20,7 +20,7 @@ function onCloseEventForm() {
 	clearEventForm();
 }
 
-const onCreateEvent = () => {
+export const onCreateEvent = () => {
 	const [title, date, startTime, endTime, description] = getInputValues;
 	const startDateEvent = getDateTime(date.value, startTime.value);
 	const endDateEvent = getDateTime(date.value, endTime.value);
@@ -32,8 +32,7 @@ const onCreateEvent = () => {
 		title: title.value,
 		description: description.value,
 	};
-	getItem('events').push(newEvent);
-	clearEventForm();
+	setItem('events', newEvent);
 };
 
 const onTimeSlotClick = (event) => {
@@ -41,6 +40,8 @@ const onTimeSlotClick = (event) => {
 	// if the click occured for the empty time-slot elements, the function performes the following algorithm
 	if (event.target.classList.contains('calendar__day_time-slot')) {
 		openModal();
+		setItem('eventIdToDelete', null);
+
 		const [title, date, startTime, endTime, description] = getInputValues;
 		let month = new Date(Number(event.target.dataset.fullDate)).getMonth() + 1;
 		const year = new Date(Number(event.target.dataset.fullDate)).getFullYear();
@@ -114,15 +115,15 @@ export function initEventForm() {
 			return;
 		} else {
 			onCreateEvent();
+			clearEventForm();
+			closeModal();
 			if (getItem('eventIdToDelete') != null) {
 				document.querySelector('.event-form__submit-btn').textContent =
 					'Create';
 				onDeleteEvent();
-				onCloseEventForm();
 				setItem('eventIdToDelete', null);
 			} else {
 				renderEvents(getItem('events'));
-				onCloseEventForm();
 			}
 		}
 	});

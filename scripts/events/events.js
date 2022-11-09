@@ -103,6 +103,7 @@ export const renderEventBoard = (event) => {
 		`Friday`,
 		`Saturday`,
 	];
+
 	const monthsNames = [
 		'December',
 		'January',
@@ -117,13 +118,14 @@ export const renderEventBoard = (event) => {
 		'October',
 		'November',
 	];
+
 	getItem('events')
 		.filter(
 			(el) =>
 				Number(el.id) === Number(event.target.dataset.eventId) ||
 				Number(el.id) === Number(event.target.parentNode.dataset.eventId)
 		)
-		.map(({ id, title, description, startTime, endTime }) => {
+		.map(({ title, description, startTime, endTime }) => {
 			const getInfoBlock = document.querySelector('.popup__info');
 			const createInfoBlock = document.createElement('div');
 			createInfoBlock.innerHTML = `<p class="event-info_name">${title}
@@ -142,9 +144,9 @@ export const renderEventBoard = (event) => {
 
 export const onDeleteEvent = () => {
 	const delEventId = getItem('eventIdToDelete');
-	const result = getItem('events').filter((el) => el.id != Number(delEventId));
-	setItem('events', result);
-	renderEvents(result);
+	const result = getItem('events').filter((el) => el.id != delEventId);
+	localStorage.setItem('events', JSON.stringify(result));
+	setItem('eventIdToDelete', null);
 };
 
 function editEventData(event) {
@@ -163,20 +165,16 @@ function editEventData(event) {
 		const getAllEventsInStorage = getItem('events');
 		getAllEventsInStorage
 			.filter((obj) => obj.id === Number(getTheParent.dataset.popupId))
-			.map(({ id, title, description, startTime, endTime }) => {
+			.map(({ id, date, title, description, startTime, endTime }) => {
 				const getEventForm = document.querySelector('.event-form');
 				getEventForm.setAttribute('id', id);
 				const startTimeNeeded = `${checkForDigits(
-					new Date(Number(startTime)).getHours()
-				)}:${checkForDigits(new Date(Number(startTime)).getMinutes())}`;
+					new Date(startTime).getHours()
+				)}:${checkForDigits(new Date(startTime).getMinutes())}`;
 				const endTimeNeeded = `${checkForDigits(
-					new Date(Number(endTime)).getHours()
-				)}:${checkForDigits(new Date(Number(endTime)).getMinutes())}`;
-				const dateNeeded = `${new Date(
-					Number(startTime)
-				).getFullYear()}-${checkForDigits(
-					new Date(Number(startTime)).getMonth() + 1
-				)}-${checkForDigits(new Date(Number(startTime)).getDate())}`;
+					new Date(endTime).getHours()
+				)}:${checkForDigits(new Date(endTime).getMinutes())}`;
+				const dateNeeded = `${date}`;
 				// return input values with the current event data;
 				titleInput.value = title;
 				descriptionInput.value = description;
@@ -188,6 +186,12 @@ function editEventData(event) {
 	}
 }
 
+export const clearEventIdToDelete = () => {
+	if (document.querySelectorAll('.hidden').length >= 1) {
+		return setItem('eventIdToDelete', null);
+	}
+};
+
 // let's add the event listeners to Edit, Delete, and Close buttons of the modal window
 document
 	.querySelector('.edit-event-btn')
@@ -198,11 +202,14 @@ document
 	.querySelector('.delete-event-btn')
 	.addEventListener('click', function () {
 		onDeleteEvent();
+		removeEventsFromCalendar();
+		renderEvents(getItem('events'));
 		closePopup();
 	});
 document
 	.querySelector('.close-event-btn')
 	.addEventListener('click', function () {
 		document.querySelector('.popup__content').removeAttribute('data-popup-id');
+		setItem('eventIdToDelete', null);
 		closePopup();
 	});

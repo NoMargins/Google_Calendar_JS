@@ -2,8 +2,8 @@ import { getItem, setItem } from '../common/storage.js';
 import { renderWeek } from '../calendar/calendar.js';
 import { renderHeader } from '../calendar/header.js';
 import { getStartOfWeek, getDisplayedMonth } from '../common/time.utils.js';
+import { renderEvents } from '../events/events.js';
 
-const navElem = document.querySelector('.navigation');
 const getTodayButton = document.querySelector('button[data-direction="today"]');
 const getPreviousButton = document.querySelector(
 	'button[data-direction="prev"]'
@@ -39,6 +39,7 @@ export const initNavigation = () => {
 		setItem('displayedWeekStart', getStartOfWeek(getDisplayedWeekStart));
 		renderHeader();
 		renderWeek();
+		renderEvents(getItem('events'));
 		renderCurrentMonth();
 	});
 	getPreviousButton.addEventListener('click', function () {
@@ -46,6 +47,7 @@ export const initNavigation = () => {
 		setItem('displayedWeekStart', getStartOfWeek(getDisplayedWeekStart));
 		renderHeader();
 		renderWeek();
+		renderEvents(getItem('events'));
 		renderCurrentMonth();
 	});
 	getNextButton.addEventListener('click', function () {
@@ -53,6 +55,7 @@ export const initNavigation = () => {
 		setItem('displayedWeekStart', getStartOfWeek(getDisplayedWeekStart));
 		renderHeader();
 		renderWeek();
+		renderEvents(getItem('events'));
 		renderCurrentMonth();
 	});
 };

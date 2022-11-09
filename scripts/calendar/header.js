@@ -3,10 +3,7 @@ import { generateWeekRange } from '../common/time.utils.js';
 import { openModal } from '../common/modal.js';
 
 const daysOfWeek = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
-const formatter = new Intl.DateTimeFormat('en', {
-	month: 'short',
-	day: 'numeric',
-});
+
 const getHeaderElem = document.querySelector('.calendar__header');
 
 export const renderHeader = () => {

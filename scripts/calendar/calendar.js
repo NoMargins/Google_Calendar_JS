@@ -1,6 +1,5 @@
 import { getItem } from '../common/storage.js';
-import { generateWeekRange } from '../common/time.utils.js';
-import { renderEvents } from '../events/events.js';
+import { generateWeekRange, getStartOfWeek } from '../common/time.utils.js';
 import { createNumbersArray } from '../common/createNumbersArray.js';
 
 const getWeekElem = document.querySelector('.calendar__week');
@@ -8,9 +7,8 @@ const daysOfWeek = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 
 export const renderWeek = () => {
 	const getDatesRange = generateWeekRange(
-		new Date(getItem('displayedWeekStart'))
+		new Date(getStartOfWeek(new Date(getItem('displayedWeekStart'))))
 	);
-
 	//let's create 7 days
 	const result = getDatesRange.map((dayNumb) => {
 		const newDivForDay = document.createElement('div');
@@ -67,5 +65,4 @@ export const renderWeek = () => {
 
 	getWeekElem.innerHTML = '';
 	getWeekElem.prepend(...result);
-	renderEvents(getItem('events'));
 };
