@@ -122,6 +122,8 @@ export function initEventForm() {
 					'Create';
 				onDeleteEvent();
 				setItem('eventIdToDelete', null);
+				removeEventsFromCalendar();
+				renderEvents(getItem('events'));
 			} else {
 				renderEvents(getItem('events'));
 			}
