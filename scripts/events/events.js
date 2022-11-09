@@ -3,7 +3,7 @@ import { closePopup } from '../common/popup.js';
 import { checkForDigits, calcTimeDiffInMinutes } from '../common/time.utils.js';
 import { openModal } from '../common/modal.js';
 
-const removeEventsFromCalendar = () => {
+export const removeEventsFromCalendar = () => {
 	return [...document.querySelectorAll('.calendar__day_time-slot')].map(
 		(timeslot) => {
 			let allEvents = [...document.querySelectorAll('.displayed-event')];

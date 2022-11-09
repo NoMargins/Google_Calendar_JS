@@ -1,5 +1,10 @@
 import { getItem, setItem } from '../common/storage.js';
-import { renderEvents, renderEventBoard, onDeleteEvent } from './events.js';
+import {
+	renderEvents,
+	renderEventBoard,
+	onDeleteEvent,
+	removeEventsFromCalendar,
+} from './events.js';
 import { getDateTime, checkForDigits } from '../common/time.utils.js';
 import { openModal, closeModal } from '../common/modal.js';
 import { openPopup } from '../common/popup.js';
