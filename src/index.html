@@ -19,7 +19,6 @@
 			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css"
 			crossorigin="anonymous"
 		/>
-		<link rel="stylesheet" href="styles.css" />
 	</head>
 	<!-- main section -->
 	<body class="page">
@@ -38,7 +37,7 @@
 				<button data-direction="next" class="icon-button navigation__nav-icon">
 					<i class="fa-solid fa-chevron-right"></i>
 				</button>
-				<span class="navigation__displayed-month">Sep 2022</span>
+				<span class="navigation__displayed-month"></span>
 			</div>
 		</header>
 		<!-- calendar body -->
@@ -63,7 +62,6 @@
 					<div class="create-event__close">
 						<button class="create-event__close-btn">+</button>
 					</div>
-					<!-- // form of the popup -->
 					<form class="event-form">
 						<input
 							type="text"
@@ -126,9 +124,12 @@
 						<i class="fa-solid fa-xmark"></i>
 					</div>
 				</div>
-				<div class="popup__info"></div>
+				<div class="popup__info">
+					<p class="popup__event-title"></p>
+					<p class="popup__event-date"></p>
+					<p class="popup__event-description"></p>
+				</div>
 			</div>
 		</div>
-		<script src="scripts/index.js" type="module"></script>
 	</body>
 </html>

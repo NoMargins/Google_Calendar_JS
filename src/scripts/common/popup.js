@@ -8,8 +8,15 @@ export function openPopup(x, y) {
 	popupContentElem.style.left = `${x}px`;
 }
 
+const cleanPopupInfo = () => {
+	document.querySelector('.popup__event-title').textContent = '';
+	document.querySelector('.popup__event-date').textContent = '';
+	document.querySelector('.popup__event-description').textContent = '';
+};
+
 export function closePopup() {
 	popupElem.classList.add('hidden');
+	cleanPopupInfo();
 }
 
 function onClickInsidePopup(event) {

@@ -1,10 +1,9 @@
-import { getItem, setItem } from '../common/storage.js';
 import {
-	renderEvents,
-	renderEventBoard,
-	onDeleteEvent,
-	removeEventsFromCalendar,
-} from './events.js';
+	setEvent,
+	getEventIdToDelete,
+	setEventIdToDelete,
+} from '../common/storage.js';
+import { renderEvents, renderPopupBoard, onDeleteEvent } from './events.js';
 import { getDateTime, checkForDigits } from '../common/time.utils.js';
 import { openModal, closeModal } from '../common/modal.js';
 import { openPopup } from '../common/popup.js';
@@ -30,14 +29,13 @@ export const onCreateEvent = () => {
 	const startDateEvent = getDateTime(date.value, startTime.value);
 	const endDateEvent = getDateTime(date.value, endTime.value);
 	const newEvent = {
-		id: Math.random(),
 		date: date.value,
 		startTime: startDateEvent,
 		endTime: endDateEvent,
 		title: title.value,
 		description: description.value,
 	};
-	setItem('events', newEvent);
+	setEvent(newEvent);
 };
 
 const onTimeSlotClick = (event) => {
@@ -45,7 +43,7 @@ const onTimeSlotClick = (event) => {
 	// if the click occured for the empty time-slot elements, the function performes the following algorithm
 	if (event.target.classList.contains('calendar__day_time-slot')) {
 		openModal();
-		setItem('eventIdToDelete', null);
+		setEventIdToDelete(null);
 
 		const [title, date, startTime, endTime, description] = getInputValues;
 		let month = new Date(Number(event.target.dataset.fullDate)).getMonth() + 1;
@@ -78,10 +76,10 @@ const onTimeSlotClick = (event) => {
 		}
 		const popupContent = document.querySelector('.popup__content');
 		popupContent.setAttribute('data-popup-id', parent.dataset.eventId);
-		setItem('eventIdToDelete', parent.dataset.eventId);
+		setEventIdToDelete(parent.dataset.eventId);
 
 		// and reveal the popup with the given event information through the renderEventBoard function
-		renderEventBoard(event);
+		renderPopupBoard(event);
 	}
 };
 
@@ -122,16 +120,15 @@ export function initEventForm() {
 			onCreateEvent();
 			clearEventForm();
 			closeModal();
-			if (getItem('eventIdToDelete') != null) {
+			const eventIdInStorage = getEventIdToDelete();
+
+			if (eventIdInStorage != null) {
 				document.querySelector('.event-form__submit-btn').textContent =
 					'Create';
 				onDeleteEvent();
-				setItem('eventIdToDelete', null);
-				removeEventsFromCalendar();
-				renderEvents(getItem('events'));
-			} else {
-				renderEvents(getItem('events'));
+				setEventIdToDelete(null);
 			}
+			renderEvents();
 		}
 	});
 
