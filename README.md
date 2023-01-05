@@ -1,7 +1,7 @@
 This is a calendar created mostly within the JS scope. 
 User can navigate through the calendar and create, edit, and delete own events.
 
-Note: the calendar uses your browser Local Storage. 
+Note: the calendar uses your browser Local Storage and MockAPI for events storage. 
 
 Watch code live at Github Pages: https://nomargins.github.io/Google_Calendar_JS/
 
