@@ -12,4 +12,5 @@ The tech stack is:
 - Sass (Scss)
 
 Design credits: Google
+
 Author: Helen Riabenko
